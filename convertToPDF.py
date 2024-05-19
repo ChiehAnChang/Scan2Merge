@@ -21,8 +21,9 @@ def convert_photo_to_pdf(image_paths, output_pdf):
     # Save the PDF to file
     pdf.output(output_pdf)
 
-# Example usage
-x = int(input('Number of Images: '))
-image_paths = [f'captured_image{i}' for i in range(x)]
-output_pdf = "output_pdf.pdf"
-convert_photo_to_pdf(image_paths, output_pdf)
+def convert(number_of_pages):
+  image_paths = [f'captured_image{i}_scanned.jpg' for i in range(number_of_pages)]
+  output_pdf = "output_pdf.pdf"
+  convert_photo_to_pdf(image_paths, output_pdf)
+
+convert(4)

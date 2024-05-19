@@ -3,8 +3,7 @@ import cv2
 import cv2 as cv
 import numpy as np
 
-
-def transform_perspective(pts, img):
+def transform_perspective(pts, img, name):
     # Calculate the suitable size of image with new perspective
     # reference https://zhuanlan.zhihu.com/p/627965231
     (tl, tr, br, bl) = pts
@@ -31,8 +30,7 @@ def transform_perspective(pts, img):
     # Change perspective
     M = cv2.getPerspectiveTransform(pts1, pts2)
     dst = cv2.warpPerspective(img, M, (max_width, max_height))
-    cv2.imwrite('Scanned.jpg', dst)
-
+    cv2.imwrite(f'{name}.jpg', dst)
 
 def read_img(name):
     img = cv.imread(name)
@@ -63,7 +61,6 @@ def read_img(name):
 
             if contours:
                 largest_contour = max(contours, key=cv.contourArea)
-                cv.drawContours(img, [largest_contour], -1, (255, 0, 0), 2)
 
                 peri = cv2.arcLength(largest_contour, True)
 
@@ -83,18 +80,18 @@ def read_img(name):
                 break
         param1 += increment
 
-    cv.drawContours(img, contours, -1, (255, 0, 0), 1)
-    cv.imshow('img', img)
-    cv.imshow('canny', canny)
-    cv.waitKey(0)  # Waits indefinitely until a key is pressed
-    cv.destroyAllWindows()  # Destroys all the windows created
+    # cv.drawContours(img, contours, -1, (255, 0, 0), 1)
+    # cv.imshow('img', img)
+    # cv.imshow('canny', canny)
+    # cv.waitKey(0)  # Waits indefinitely until a key is pressed
+    # cv.destroyAllWindows()  # Destroys all the windows created
 
     return screen_cnt, ratio, origin_img
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    screen_cnt, ratio, origin_img = read_img("captured_image0.jpg")
+    screen_cnt, ratio, origin_img = read_img("paper.jpg")
     pts = screen_cnt.reshape(4, 2) * ratio
     transform_perspective(pts, origin_img)
 
