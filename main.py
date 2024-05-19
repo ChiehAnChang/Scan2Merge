@@ -54,7 +54,7 @@ def read_img(name):
     param2 = 0
     max_param1 = 400
     max_param2 = 400
-    increment = 20
+    increment = 10
     screen_cnt = None
     while param1 < max_param1:
         while param2 < max_param2:
@@ -63,6 +63,7 @@ def read_img(name):
 
             if contours:
                 largest_contour = max(contours, key=cv.contourArea)
+                cv.drawContours(img, [largest_contour], -1, (255, 0, 0), 2)
 
                 peri = cv2.arcLength(largest_contour, True)
 
@@ -82,18 +83,18 @@ def read_img(name):
                 break
         param1 += increment
 
-    # cv.drawContours(img, contours, -1, (255, 0, 0), 1)
-    # cv.imshow('img', img)
-    # cv.imshow('canny', canny)
-    # cv.waitKey(0)  # Waits indefinitely until a key is pressed
-    # cv.destroyAllWindows()  # Destroys all the windows created
+    cv.drawContours(img, contours, -1, (255, 0, 0), 1)
+    cv.imshow('img', img)
+    cv.imshow('canny', canny)
+    cv.waitKey(0)  # Waits indefinitely until a key is pressed
+    cv.destroyAllWindows()  # Destroys all the windows created
 
     return screen_cnt, ratio, origin_img
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    screen_cnt, ratio, origin_img = read_img("paper.jpg")
+    screen_cnt, ratio, origin_img = read_img("captured_image0.jpg")
     pts = screen_cnt.reshape(4, 2) * ratio
     transform_perspective(pts, origin_img)
 
