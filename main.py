@@ -21,14 +21,16 @@ def read_img(name):
 
     blur = cv.GaussianBlur(gray, (5, 5), 0)
 
+    # Tune the maxVal and minVal of canny function.
     param1 = 0
     param2 = 0
     max_param1 = 400
     max_param2 = 400
     increment = 20
+    screen_cnt = None
     while param1 < max_param1:
         while param2 < max_param2:
-            canny = cv.Canny(blur, 350, 400)
+            canny = cv.Canny(blur, param1, param2)
             contours, hierarchies = cv.findContours(canny, cv.RETR_LIST, cv.CHAIN_APPROX_SIMPLE)
 
             if contours:
@@ -36,13 +38,21 @@ def read_img(name):
                 cv.drawContours(img, [largest_contour], -1, (255, 0, 0), 2)
 
                 peri = cv2.arcLength(largest_contour, True)
-                approx = cv2.approxPolyDP(largest_contour, 0.02 * peri, True)  # 进行多边形逼近，得到多边形的角点，并且轮廓应该封闭
 
-                # 如果拟合的多边形角点为4，则可以认为是我们需要的外轮廓
+                # Perform polygon approximation to obtain the corner points of the polygon,
+                # and the contour should be closed
+                approx = cv2.approxPolyDP(largest_contour, 0.02 * peri, True)
+
+                # If the fitted polygon corner point is 4, it can be considered as the outer contour we need
                 if len(approx) == 4:
                     screen_cnt = approx
+                    break
 
+            param2 += increment
 
+            if screen_cnt:
+                break
+        param1 += increment
 
     # cv.drawContours(img, contours, -1, (255, 0, 0), 1)
     cv.imshow('img', img)
@@ -52,7 +62,7 @@ def read_img(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    read_img("paper.jpg")
+    read_img("paper3.jpg")
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
 
