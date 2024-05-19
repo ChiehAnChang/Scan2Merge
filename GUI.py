@@ -2,6 +2,14 @@ import tkinter as tk
 from captureImage import *
 import os
 
+def show_current_pdf(listbox):
+    listbox.delete(0, tk.END)
+    all_files = os.listdir()
+    
+    for file in all_files:
+        if file.endswith(".pdf"):
+            listbox.insert(tk.END, file)
+
 def show_main_page():
     main_frame.pack(fill='both', expand=True)
 
@@ -59,7 +67,7 @@ main_frame.pack(fill='both', expand=True)
 # Create the second frame (second page)
 second_frame = tk.Frame(root)
 upload_image_button = tk.Button(second_frame, text="Upload Image", command=show_upload_image_page)
-upload_pdf_button = tk.Button(second_frame, text="Upload PDF", command=show_upload_pdf_page)
+upload_pdf_button = tk.Button(second_frame, text="Open PDF", command=show_upload_pdf_page)
 upload_image_button.pack(pady=10)
 upload_pdf_button.pack(pady=10)
 
@@ -77,6 +85,7 @@ file_list_scroll = tk.Scrollbar(upload_pdf_frame, orient=tk.VERTICAL, command=fi
 file_list.config(yscrollcommand=file_list_scroll.set)
 file_list_scroll.pack(side=tk.RIGHT, fill=tk.Y)
 file_list.pack(fill='both', expand=True)
+show_current_pdf(file_list)
 back_button_upload_pdf = tk.Button(upload_pdf_frame, text="Back", command=back_to_second_page_from_pdf)
 back_button_upload_pdf.pack(pady=10)
 
