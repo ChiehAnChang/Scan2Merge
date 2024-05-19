@@ -43,4 +43,6 @@ def open_capture(image_counter):
       image_counter = capture_frame(image_counter)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):  # Press 'q' to exit
+      cap.release()
+      cv2.destroyAllWindows()
       break
