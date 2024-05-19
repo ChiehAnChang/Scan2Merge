@@ -1,4 +1,5 @@
 import tkinter as tk
+from captureImage import *
 import os
 
 def show_current_pdf(listbox):
@@ -22,6 +23,8 @@ def show_upload_image_page():
 
 def simulate_camera_capture():
     # Placeholder for actual camera capture functionality
+    open_capture(image_counter)
+
     print("Simulating Camera Capture")
 
 def back_to_second_page():
@@ -43,6 +46,13 @@ def update_file_list():
 def back_to_second_page_from_pdf():
     upload_pdf_frame.pack_forget()  # Hide the upload PDF frame
     show_second_page()  # Show the second frame
+
+
+
+# Function to be called when the button is clicked
+def on_button_click():
+    open_capture(image_counter)
+    print("Button was clicked!")
 
 # Create the main window
 root = tk.Tk()
