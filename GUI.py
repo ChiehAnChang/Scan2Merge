@@ -1,8 +1,9 @@
 import tkinter as tk
+from captureImage import *
 
 # Function to be called when the button is clicked
 def on_button_click():
-    
+    open_capture(image_counter)
     print("Button was clicked!")
 
 # Create the main window
