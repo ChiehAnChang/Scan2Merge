@@ -1,6 +1,6 @@
 # Scan2Merge
 ## Authors
-- Chie-An
+- Chieh-An
 - Richie
 - Kevin
 - Jason
